@@ -26,10 +26,13 @@ script type="application/ld+json" == @structured_data.to_json
     .col-xs-12.col-sm-8
       .participants
         .panel.panel-default
-          .panel-heading
-            h4
+          .panel-heading.clearfix
+            h4.pull-left
               => Event.human_attribute_name(:participants)
               small = @event.participants.size
+            .pull-right
+              - if can? :update, @event.object
+                = link_to t('.participants_export'), participants_event_path(@event, format: :csv), class: 'btn btn-warning'
           .panel-body
             = render partial: 'participants_block', object: @event, as: :event
           .panel-footer

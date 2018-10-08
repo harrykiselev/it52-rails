@@ -6,7 +6,7 @@ class EventsController < ApplicationController
 
   helper_method :past_events_page?
 
-  before_action :set_event, only: [:show, :edit, :destroy, :update, :publish, :cancel_publication]
+  before_action :set_event, only: [:show, :edit, :destroy, :update, :publish, :cancel_publication, :participants]
   before_action :check_actual_slug, only: :show
   before_action :define_meta_tags, only: [:show, :edit]
   before_action :set_organizer, only: :create
@@ -41,6 +41,20 @@ class EventsController < ApplicationController
       format.ics { render body: Calendar.new(@event).to_ical, mime_type: Mime::Type.lookup("text/calendar") }
     end
     #respond_with @event
+  end
+
+  def participants
+    participants = @event.participants
+    filename = "#{ @event.id }_#{ @event.slug }_participants"
+    columns_to_export = %w(email slug first_name last_name)
+
+    respond_to do |format|
+      format.csv {
+        send_data RenderARCollectionToCsv.perform(participants, columns_to_export),
+                  type: Mime::Type.lookup('text/csv'),
+                  disposition: "attachment; filename=#{filename}.csv"
+      }
+    end
   end
 
   def new
