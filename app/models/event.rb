@@ -18,6 +18,8 @@
 #
 
 class Event < ApplicationRecord
+  paginates_per 20
+
   mount_uploader :title_image, EventTitleImageUploader
 
   belongs_to :organizer, class_name: 'User'

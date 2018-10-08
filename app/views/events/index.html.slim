@@ -12,15 +12,13 @@
             i.fas.fa-rss
 
   ul.nav.nav-pills role="tablist"
-    li role="presentation" class="#{'active' unless @past}"
+    li role="presentation" class="#{'active' unless past_events_page? }"
       = link_to t('.future_events'), events_path
-    li role="presentation" class="#{'active' if @past}"
+    li role="presentation" class="#{'active' if past_events_page? }"
       = link_to t('.past_events'), past_events_path
   br
 
-  - if @events.present?
-    .events = render @events
-  - else
+  - if @events.empty?
     .alert.alert-success
       p Похоже все коллеги устали митапить и хакатонить и сейчас отдыхают.
       p
@@ -31,3 +29,11 @@
       p: small
         = mail_to 'events@it52.info', 'Напишите нам', class: 'alert-link'
         ', если хотите, но не знаете как. Мы всегда поможем с организацией. Бесплатно.
+  - else
+    .events
+      = render @events
+
+  // pagination
+  - if past_events_page?
+    .text-center
+      == paginate @events

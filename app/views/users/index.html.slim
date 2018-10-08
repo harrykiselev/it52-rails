@@ -6,6 +6,6 @@
 
   - @users.each_slice(6) do |row_slice|
     .row = render row_slice
-    
-  .users-paginator
-   == paginate @users
+
+  .text-center
+    == paginate @users
