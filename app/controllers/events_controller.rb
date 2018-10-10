@@ -46,7 +46,7 @@ class EventsController < ApplicationController
   def participants
     participants = @event.participants
     filename = "#{ @event.id }_#{ @event.slug }_participants"
-    columns_to_export = %w(email slug first_name last_name)
+    columns_to_export = %w(email profile_link full_name)
 
     respond_to do |format|
       format.csv {

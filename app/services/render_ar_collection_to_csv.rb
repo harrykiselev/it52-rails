@@ -5,7 +5,7 @@ class RenderARCollectionToCsv
     CSV.generate(options) do |csv|
       csv << column_names
       collection.each do |collection_item|
-        csv << collection_item.attributes.values_at(*column_names)
+        csv << column_names.map { |method_name| collection_item.send(method_name) }
       end
     end
   end

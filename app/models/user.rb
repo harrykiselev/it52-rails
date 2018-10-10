@@ -67,6 +67,10 @@ class User < ApplicationRecord
     [first_name, last_name].compact.join(' ').presence || nickname.presence || email
   end
 
+  def profile_link
+    url_helpers.user_url(self, host: Figaro.env.mailing_host)
+  end
+
   def to_s
     full_name
   end

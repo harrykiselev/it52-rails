@@ -30,8 +30,6 @@ fog_host: s3.amazonaws.com
 fog_region: us-east-1
 fog_provider: AWS
 
-mailing_host: localhost:8080
-
 mailchimp_api_key: "baeee87e77fccb0a5b76278a99744919-us4"
 mailchimp_list_id: "b00b5"
 
