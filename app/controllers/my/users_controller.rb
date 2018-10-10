@@ -27,7 +27,8 @@ class My::UsersController < ApplicationController
   end
 
   def user_profile_params
-    params.require(:user).permit(:first_name, :last_name, :nickname, :website, :bio, :avatar_image, :avatar_image_cache, :subscription)
+    params.require(:user).permit(:first_name, :last_name, :nickname, :employment,
+                                 :website, :bio, :avatar_image, :avatar_image_cache, :subscription)
   end
 
   def sync_with_mailchimp

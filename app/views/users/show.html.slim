@@ -10,6 +10,9 @@
           small< = @user.nickname
         = @user.link_to_website
 
+        - unless @user.employment.blank?
+          h4 #{ t('activerecord.attributes.user.employment') }:  #{ @user.employment }
+
       - if @user.bio?
          = @user.bio
          hr
