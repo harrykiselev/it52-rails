@@ -11,7 +11,7 @@ FactoryBot.define do
     end
 
     factory :published_event do
-      published true
+      published { true }
     end
   end
 end

@@ -1,15 +1,24 @@
+addons:
+  postgresql: '9.3'
+
+cache:
+  bundler: true
+  directories:
+    - "/home/travis/.rvm/"
+
 language: ruby
 rvm:
   - 2.5.1
-addons:
-  postgresql: '10.0'
-before_script:
-  - cp config/database.yml.travis config/database.yml
-  - cp config/secrets.yml.template config/secrets.yml
-  - cp config/application.yml.template config/application.yml
-bundler_args: --retry 3
+
 install:
-  - bundle install
+  - "bundle install --path vendor/bundle --retry 3"
+
+before_script:
+  - "cp config/database.yml.travis config/database.yml"
+  - "cp config/secrets.yml.template config/secrets.yml"
+  - "cp config/application.yml.template config/application.yml"
+
 script:
-  - bundle exec rake db:create db:migrate
-  - bundle exec rspec
+  - "bundle exec rake db:create"
+  - "bundle exec rake db:schema:load"
+  - "bundle exec rspec"

@@ -8,7 +8,7 @@ describe EventsController do
 
     context 'when user is anonymous' do
       it 'unlogged user cannot create event' do
-        expect(post :create, event: event_attrs).to redirect_to root_path
+        expect(post :create, params: { event: event_attrs }).to redirect_to root_path
       end
 
       it { expect(get :new).to redirect_to new_user_session_path }
@@ -16,20 +16,26 @@ describe EventsController do
 
     context 'when user is logged in' do
       before { sign_in user }
-      it { expect { post :create, event: event_attrs }.to change(Event, :count).by 1 }
+      it { expect { post :create, params: { event: event_attrs } }.to change(Event, :count).by 1 }
     end
 
     context 'when admin is logged in' do
       let(:created_event) { Event.first }
-      let(:request)  { post :create, event: event_attrs }
+
       before { sign_in admin }
 
-      it { expect(request).to redirect_to event_path(created_event) }
+      context 'after event creating' do
+        before { post :create, params: { event: event_attrs } }
 
-      it 'assigns organizer to event' do
-        post :create, event: event_attrs
-        expect(created_event.organizer).to eq admin
+        it 'redirect to event page after event creating' do
+          expect(request).to redirect_to event_path(created_event)
+        end
+
+        it 'assigns organizer to event' do
+          expect(created_event.organizer).to eq admin
+        end
       end
+
     end
   end
 end

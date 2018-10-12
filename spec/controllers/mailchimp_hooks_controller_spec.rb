@@ -22,16 +22,21 @@ describe MailchimpHooksController do
       }
     }
 
-    let(:unsubscription_params) { subscription_params.deep_merge(type: 'subscribe', data: { email: unsubscribed_user.email }) }
+    let(:unsubscription_params) {
+      subscription_params.deep_merge({
+        type: 'subscribe',
+        data: { email: unsubscribed_user.email }
+      })
+    }
 
     it 'Mailchimp hook should unsubscribe user' do
-      post :update_subscription, subscription_params
+      post :update_subscription, params: subscription_params
       subscribed_user.reload
       expect(subscribed_user.subscription).to eq false
     end
 
-    it 'Mailchimp hook should unsubscribe user' do
-      post :update_subscription, unsubscription_params
+    it 'Mailchimp hook should subscribe user' do
+      post :update_subscription, params: unsubscription_params
       unsubscribed_user.reload
       expect(subscribed_user.subscription).to eq true
     end

@@ -12,7 +12,7 @@ class MailchimpHooksController < ApplicationController
       @user.subscription
     end
     status = @user.update(subscription: subscription) ? :ok : :unprocessable_entity
-    render nothing: true, status: status
+    head status
   end
 
   def check

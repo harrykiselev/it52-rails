@@ -120,7 +120,6 @@ end
 
 group :test do
   gem 'shoulda-matchers', require: false
-  gem "codeclimate-test-reporter", require: false
 end
 
 # Heroku compatibility
