@@ -1,5 +1,8 @@
 addons:
   postgresql: '9.3'
+  code_climate:
+    repo_token:
+      secure: "insert your code here"
 
 cache:
   bundler: true
@@ -22,3 +25,6 @@ script:
   - "bundle exec rake db:create"
   - "bundle exec rake db:schema:load"
   - "bundle exec rspec"
+
+after_script:
+  - "bundle exec codeclimate-test-reporter"
